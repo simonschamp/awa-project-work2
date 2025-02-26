@@ -11,8 +11,28 @@
   padding: 20px;
   margin: 10px;
   text-align: center;
-  /*max-width: 250px;*/
+  max-width: 200px;
   display: inline-block;
-  width: auto;
+  /*width: auto;*/
   height: 500px;
 }
+/*
+.card-div {
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+  max-width: 180px;
+  display: inline-block;
+  
+  height: auto;
+  max-height: 50px;
+}
+
+.textarea-div textarea{
+  max-width: 170px;
+  text-align: left;
+}
+*/

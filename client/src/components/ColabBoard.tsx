@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import "../styles/ColabBoard.css";
 
-interface Task {
+interface Card {
   id: number;
   content: string;
 }
@@ -10,7 +10,7 @@ interface Task {
 interface Column {
   id: number;
   title: string;
-  tasks: Task[];
+  tasks: Card[];
 }
 
 const ColabBoard = () => {
@@ -38,6 +38,41 @@ const ColabBoard = () => {
     ]);
   };
 
+  // To add a new card to the column
+  const addNewCardToTheColumn = (columnId: number, content: string) => {
+    const initiateTask: Card = {
+      id: Date.now(), // special id using timing
+      content,
+    };
+
+    setColumns((priorColumns) =>
+      priorColumns.map((column) =>
+        column.id === columnId
+          ? { ...column, tasks: [...column.tasks, initiateTask] }
+          : column
+      )
+    );
+  };
+  // To edit the card content
+  const cardContentEditting = (
+    columnId: number,
+    taskId: number,
+    newMessage: string
+  ) => {
+    setColumns((priorColumns) =>
+      priorColumns.map((column) =>
+        column.id === columnId
+          ? {
+              ...column,
+              tasks: column.tasks.map((task) =>
+                task.id === taskId ? { ...task, content: newMessage } : task
+              ),
+            }
+          : column
+      )
+    );
+  };
+
   return (
     <div>
       <h2>Welcome to Colab Board</h2>
@@ -53,12 +88,30 @@ const ColabBoard = () => {
             {columns.map((column) => (
               <div className="inner-col-div" key={column.id}>
                 <h2>{column.title}</h2>
-                <div>
+
+                {/*Button that add new card to column */}
+                <button
+                  onClick={() =>
+                    addNewCardToTheColumn(
+                      column.id,
+                      `Fresh Card: ${column.title}`
+                    )
+                  }
+                >
+                  Add new card
+                </button>
+                {/* This block displays card in the column */}
+                <div className="card-div">
                   {column.tasks.length === 0 ? (
-                    <p>No tasks in this column</p>
+                    <p>There are no cards</p>
                   ) : (
                     column.tasks.map((task) => (
-                      <div key={task.id}>{task.content}</div>
+                      <CardToBeEditted
+                        key={task.id}
+                        columnId={column.id}
+                        task={task}
+                        onEditting={cardContentEditting}
+                      />
                     ))
                   )}
                 </div>
@@ -66,6 +119,47 @@ const ColabBoard = () => {
             ))}
           </div>{" "}
         </>
+      )}
+    </div>
+  );
+};
+
+interface CardToBeEdittedProp {
+  columnId: number;
+  task: Card;
+  onEditting: (columnId: number, taskId: number, newMessage: string) => void;
+}
+
+const CardToBeEditted: React.FC<CardToBeEdittedProp> = ({
+  columnId,
+  task,
+  onEditting,
+}) => {
+  const [isModifying, setIsModifying] = useState<boolean>(false);
+  const [newMessage, setNewMessage] = useState<string>(task.content);
+
+  const performSave = () => {
+    onEditting(columnId, task.id, newMessage);
+    setIsModifying(false);
+  };
+
+  return (
+    <div>
+      {isModifying ? (
+        <div className="textarea-div">
+          <textarea
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            rows={3}
+            placeholder="Message here..."
+          />
+          <button onClick={performSave}>Save</button>
+        </div>
+      ) : (
+        <div>
+          <p>{task.content}</p>
+          <button onClick={() => setIsModifying(true)}>Edit</button>
+        </div>
       )}
     </div>
   );
