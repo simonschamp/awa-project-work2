@@ -1,0 +1,29 @@
+{
+  "name": "awa-wk12-demo-fullstack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm run dev --prefix client",
+    "server": "npm start --prefix server",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "awa-wk12-demo-fullstack": "file:",
+    "concurrently": "^9.1.2",
+    "cors": "^2.8.5",
+    "gapi-script": "^1.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-error-boundary": "^5.0.0",
+    "react-google-login": "^5.2.2",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/react-beautiful-dnd": "^13.1.8"
+  }
+}

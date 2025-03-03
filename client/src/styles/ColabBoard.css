@@ -1,0 +1,59 @@
+/*This is for the column div*/
+.col-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*This is for the card div*/
+.inner-col-div {
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  max-width: 200px;
+  display: inline-block;
+  height: 600px;
+  min-width: 200px;
+  background-color: hsl(0, 0%, 96%);
+}
+
+/*This is targeting the card content (textarea)*/
+.title-content-div .card-content {
+  margin: 0;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+/*This is targetting the card's text area*/
+.textarea-div {
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+}
+
+/*This is targeting card delete button*/
+.inner-col-div .delete-col-btn {
+  background-color: hsl(56, 78%, 80%);
+  margin: 5px;
+}
+/*This is targeting the card edit btn and the card delete btn*/
+.title-content-div .card-edit-btn,
+.card-delete-btn {
+  margin: 10px;
+  background-color: hsl(0, 1%, 80%);
+  border: none;
+}
+
+/*This is targeting the add new column btn*/
+.add-column-btn {
+  background-color: hsl(60, 100%, 80%);
+}
+
+/*For setting card's background properties*/
+.card-background {
+  background-color: hsl(0, 4%, 80%);
+  border-radius: 10px;
+}
