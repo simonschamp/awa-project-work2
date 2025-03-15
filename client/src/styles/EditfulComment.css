@@ -1,0 +1,4 @@
+/*Targeting the comment delete button*/
+.comment-delete-btn {
+  background-color: hsl(0, 0%, 96%);
+}

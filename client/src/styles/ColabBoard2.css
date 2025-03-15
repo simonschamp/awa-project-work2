@@ -1,0 +1,91 @@
+/*Targeting the column div*/
+.column-div {
+  display: flex;
+  gap: 20px;
+  height: auto;
+  min-height: 500px;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/*Targeting the inner column div*/
+.inner-column-div {
+  border: 1px solid hsl(0, 5%, 84%);
+  padding: 10px;
+  min-width: 250px;
+  max-width: 280px;
+
+  border-radius: 0px;
+  box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+  background-color: hsl(0, 0%, 96%);
+
+  border: 1px solid hsl(210, 79%, 46%);
+}
+
+/* Targeting the card div*/
+.card-div {
+  border: 1px solid hsl(0, 7%, 80%);
+  padding: 5px;
+  margin-top: 5px;
+}
+
+/*Targeting delete card button*/
+.delete-card-btn {
+  margin-top: 5px;
+  background-color: red;
+  color: white;
+}
+
+/*Targeting set card color button*/
+.set-titlecolor-btn {
+  margin-top: 5px;
+}
+
+/*Targeting delete column button*/
+.delete-column-btn {
+  background-color: hsl(54, 100%, 80%);
+}
+/*Targeting add new card button*/
+.add-new-card-btn {
+  background-color: hsl(210, 79%, 46%);
+}
+
+/*Targeting the search input filed*/
+.search-cards {
+  margin: 10px;
+}
+
+/*Targeting the timestamp paragraphs*/
+.timestamp-paragraph {
+  margin: 1px;
+}
+
+/*Responsive design covering mobile devices*/
+@media (max-width: 320px) {
+  .column-div {
+    display: flex;
+    gap: 10px;
+    height: auto;
+    min-height: 500px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    justify-content: center;
+    justify-items: center;
+  }
+}
+
+@media (max-width: 623px) {
+  .column-div {
+    display: flex;
+    gap: 10px;
+    height: auto;
+    min-height: 500px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    justify-content: center;
+    justify-items: center;
+  }
+}
