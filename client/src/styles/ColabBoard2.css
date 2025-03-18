@@ -61,6 +61,25 @@
   margin: 1px;
 }
 
+/*Targeting time estimation paragraph*/
+.time-estimate-paragraph {
+  margin: 2px;
+}
+
+/*Targeting card's comment input field*/
+.card-comment-input {
+  margin-top: 1px;
+}
+/*Targeting the clickable button when the work is done*/
+.done {
+  background-color: hsl(210, 79%, 46%);
+}
+
+/*Targeting the logged time text*/
+.logged-time {
+  margin: 2px;
+}
+
 /*Responsive design covering mobile devices*/
 @media (max-width: 320px) {
   .column-div {

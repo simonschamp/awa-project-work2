@@ -4,6 +4,7 @@ import EditfulText from "./EditfulText";
 import "../styles/ColabBoard2.css";
 import EditfulComment from "./EditfulComment";
 import ProgressControl from "./ProgressControl";
+import { DropResult } from "react-beautiful-dnd";
 
 // Utility method for converting timestamps into readable objects
 const formattingTheDate = (timeString?: string): string => {
@@ -19,7 +20,7 @@ const ColabBoard2 = () => {
   // initialize useColabBoard component
   const {
     columns,
-    saveColumns,
+    setColumns,
     addColumnToBoard,
     updateTitleOfColumn,
     deleteColumnFromBoard,
@@ -39,6 +40,56 @@ const ColabBoard2 = () => {
   // State for search keywords
   const [searchWord, setSearchWord] = useState("");
 
+  //After studying the drag-and-drop method in Chatgpt, I decided to implement the drad/drop method below
+  const onDragAtEnd = (result: DropResult) => {
+    const { source, destination, type } = result;
+
+    if (!destination) return;
+
+    if (type === "COLUMN") {
+      //Handling column re-positioning
+      const newColumns = [...columns];
+      const [movingColumn] = newColumns.splice(source.index, 1);
+      newColumns.splice(destination.index, 0, movingColumn);
+      setColumns(newColumns);
+    } else {
+      // Moving cards  from one column to another
+      const sourcePointColumn = columns.find(
+        (column) => column.id === source.droppableId
+      )!;
+      const destinationColumn = columns.find(
+        (column) => column.id === destination.droppableId
+      )!;
+      const newSourcePointCards = [...sourcePointColumn.cards];
+      const [movingCard] = newSourcePointCards.splice(source.index, 1);
+
+      if (sourcePointColumn === destinationColumn) {
+        // moving cards within the same column
+        newSourcePointCards.splice(destination.index, 0, movingCard);
+        setColumns(
+          columns.map((column) =>
+            column.id === sourcePointColumn.id
+              ? { ...column, cards: newSourcePointCards }
+              : column
+          )
+        );
+      } else {
+        // moving cards to another column
+        const newDestinationCards = [...destinationColumn.cards];
+        newDestinationCards.splice(destination.index, 0, movingCard);
+        setColumns((priorColumns) =>
+          priorColumns.map((column) =>
+            column.id === sourcePointColumn.id
+              ? { ...column, cards: newSourcePointCards }
+              : column.id === destinationColumn.id
+              ? { ...column, cards: newDestinationCards }
+              : column
+          )
+        );
+      }
+    }
+  };
+
   // Method to filter the cards that match search terms
   const filterMatchingCards = (title: string, content: string) => {
     return (
@@ -50,8 +101,6 @@ const ColabBoard2 = () => {
   return (
     <div>
       <h2>ColabBoard2</h2>
-
-      <button onClick={saveColumns}>Save Board</button>
 
       {/*Search field */}
       <label>
@@ -343,3 +392,55 @@ const EditableCard: React.FC<EditableCardProps> = ({
 };
 
 export default ColabBoard2;
+
+//Draggable droppable
+
+//After studying the drag-and-drop method in Chatgpt, I decided to implement the drad/drop method below
+const onDragAtEnd = (result: DropResult) => {
+  const { source, destination, type } = result;
+
+  if (!destination) return;
+
+  if (type === "COLUMN") {
+    //Handling column re-positioning
+    const newColumns = [...columns];
+    const [movingColumn] = newColumns.splice(source.index, 1);
+    newColumns.splice(destination.index, 0, movingColumn);
+    setColumns(newColumns);
+  } else {
+    // Moving cards  from one column to another
+    const sourcePointColumn = columns.find(
+      (column) => column.id === source.droppableId
+    )!;
+    const destinationColumn = columns.find(
+      (column) => column.id === destination.droppableId
+    )!;
+    const newSourcePointCards = [...sourcePointColumn.cards];
+    const [movingCard] = newSourcePointCards.splice(source.index, 1);
+
+    if (sourcePointColumn === destinationColumn) {
+      // moving cards within the same column
+      newSourcePointCards.splice(destination.index, 0, movingCard);
+      setColumns(
+        columns.map((column) =>
+          column.id === sourcePointColumn.id
+            ? { ...column, cards: newSourcePointCards }
+            : column
+        )
+      );
+    } else {
+      // moving cards to another column
+      const newDestinationCards = [...destinationColumn.cards];
+      newDestinationCards.splice(destination.index, 0, movingCard);
+      setColumns((priorColumns) =>
+        priorColumns.map((column) =>
+          column.id === sourcePointColumn.id
+            ? { ...column, cards: newSourcePointCards }
+            : column.id === destinationColumn.id
+            ? { ...column, cards: newDestinationCards }
+            : column
+        )
+      );
+    }
+  }
+};

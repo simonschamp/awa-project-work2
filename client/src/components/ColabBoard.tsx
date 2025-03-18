@@ -194,15 +194,8 @@ const ColabBoard = () => {
           <p>Please log in to the system</p>
         ) : (
           <>
-            <button onClick={() => addNewCardToTheColumn(1)}>
-              Add new card to New task
-            </button>
-            <button onClick={() => addNewCardToTheColumn(2)}>
-              Add new card to On going
-            </button>
-            <button onClick={() => addNewCardToTheColumn(3)}>
-              Add new card to Completed
-            </button>
+          
+            
             {/* This button will add new column to the board*/}
             <button
               className="add-column-btn"
@@ -229,6 +222,7 @@ const ColabBoard = () => {
                         >
                           Delete column
                         </button>
+                        
 
                         {/*Button that add new card to column */}
                         <button
