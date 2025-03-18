@@ -6,7 +6,6 @@ interface Comment {
   createdAt: string;
   updatedAt: string;
 }
-
 interface Card {
   id: string;
   title: string;
@@ -342,8 +341,7 @@ const useColabBoard = () => {
       )
     );
   };
-
-  return {
+  const variable = {
     columns,
     saveColumns,
     addColumnToBoard,
@@ -358,6 +356,9 @@ const useColabBoard = () => {
     deleteTheComment,
     markTheCardWhenDone,
     logTheTime,
+  };
+  return {
+    variable,
   };
 };
 
