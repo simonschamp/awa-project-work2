@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+/*import React, { useEffect } from "react";
 import { useState } from "react";
 import "../styles/ColabBoard.css";
 
@@ -51,8 +51,8 @@ const ColabBoard = () => {
   return `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 }*/
 
-  // Adding new columns
-  const addNewColumn = (title: string) => {
+// Adding new columns
+/*const addNewColumn = (title: string) => {
     if (columns.some((column) => column.title === title)) {
       alert("Column already exists");
     }
@@ -187,8 +187,8 @@ const ColabBoard = () => {
 
   return (
     <div>
-    {/*This is the very latest version */}
-      <DragDropContext onDragEnd={implementDragEnd}>
+    {/*This is the very latest version */ //}
+/*<DragDropContext onDragEnd={implementDragEnd}>
         <h2>Welcome to Colab Board</h2>
         {!jwt ? (
           <p>Please log in to the system</p>
@@ -196,8 +196,8 @@ const ColabBoard = () => {
           <>
           
             
-            {/* This button will add new column to the board*/}
-            <button
+            {/* This button will add new column to the board*/ //}
+/* <button
               className="add-column-btn"
               onClick={() => addNewColumn("New Column")}
             >
@@ -224,15 +224,15 @@ const ColabBoard = () => {
                         </button>
                         
 
-                        {/*Button that add new card to column */}
-                        <button
+                        {/*Button that add new card to column */ //}
+/*<button
                           onClick={() => addNewCardToTheColumn(column.id)}
                         >
                           Add new card
                         </button>
 
-                        {/* This block displays card in the column */}
-                        <div className="card-div">
+                        {/* This block displays card in the column */ //}
+/*<div className="card-div">
                           {column.tasks.length === 0 ? (
                             <p>There are no cards</p>
                           ) : (
@@ -382,8 +382,8 @@ const CardToBeEditted: React.FC<CardToBeEdittedProp> = ({
             style={{ color: cardTextareaColor }}
           />
           <div>
-            {/*color picker applicable to card's title and content */}
-            <label>
+            {/*color picker applicable to card's title and content */ //}
+/* <label>
               Title color:
               <input
                 type="color"
@@ -435,3 +435,4 @@ const CardToBeEditted: React.FC<CardToBeEdittedProp> = ({
 };
 
 export default ColabBoard;
+*/

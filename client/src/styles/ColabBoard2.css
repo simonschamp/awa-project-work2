@@ -49,6 +49,13 @@
 /*Targeting add new card button*/
 .add-new-card-btn {
   background-color: hsl(210, 79%, 46%);
+  color: white;
+}
+
+/*Targeting add new column button*/
+.add-column-btn {
+  background-color: hsl(210, 79%, 46%);
+  color: white;
 }
 
 /*Targeting the search input filed*/
@@ -73,11 +80,18 @@
 /*Targeting the clickable button when the work is done*/
 .done {
   background-color: hsl(210, 79%, 46%);
+  color: white;
 }
 
 /*Targeting the logged time text*/
 .logged-time {
   margin: 2px;
+}
+/*Targeting the save board button*/
+.save-board {
+  margin: 10px;
+  background-color: hsl(210, 79%, 46%);
+  color: white;
 }
 
 /*Responsive design covering mobile devices*/

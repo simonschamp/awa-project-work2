@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/ProgressControl.css";
 
 interface ProgressControlProps {
   estimateOfTime: number;
@@ -6,6 +7,8 @@ interface ProgressControlProps {
   doneTime?: number;
   isFinished: boolean;
 }
+
+// After stydying the function in Chatgpt, I decided to implement the methods below.
 
 const ProgressControl: React.FC<ProgressControlProps> = ({
   estimateOfTime,
@@ -29,19 +32,10 @@ const ProgressControl: React.FC<ProgressControlProps> = ({
   }
 
   return (
-    <div
-      style={{
-        width: "100%",
-        backgroundColor: "#d1d5db", // default color gray
-        borderRadius: "9px",
-        height: "20px",
-        overflow: "hidden",
-        position: "relative",
-        marginTop: "6px",
-      }}
-    >
+    <div className="process-control">
       {/* Time that is logged */}
       <div
+        className="logged-time"
         style={{
           width: `${progressOnLog}%`,
           backgroundColor: "rgba(96, 165, 250, 0.5)", // blue with opacity

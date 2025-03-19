@@ -37,7 +37,7 @@ const useColabBoard = () => {
   const API_URL = "http://localhost:8000/columns";
 
   // Method for loading columns from MongoDB to the page
-  const loadColumns = async () => {
+  const loadTheColumns = async () => {
     try {
       const response = await fetch(API_URL);
       if (!response.ok) {
@@ -51,13 +51,13 @@ const useColabBoard = () => {
   };
 
   useEffect(() => {
-    loadColumns();
+    loadTheColumns();
   }, []);
 
   //Method for saving columns from MongoDB
-  const saveColumns = async () => {
+  const saveTheColumns = async () => {
     try {
-      console.log("Saving columns:", columns);
+      console.log("Saving the columns:", columns);
       const response = await fetch(API_URL, {
         method: "POST",
         headers: {
@@ -69,10 +69,10 @@ const useColabBoard = () => {
       console.log("Saved response:", data);
       if (!response.ok) {
         throw new Error(
-          `Failed to save columns: ${data.error || response.statusText}`
+          `Failed to save the columns: ${data.error || response.statusText}`
         );
       }
-      console.log("Columns saved successfully:", data);
+      console.log("Columns were saved successfully:", data);
     } catch (error) {
       console.error("Error saving columns:", error);
     }
@@ -191,8 +191,8 @@ const useColabBoard = () => {
     newTitle: string,
     newContent: string
   ) => {
-    setColumns((allColumns) =>
-      allColumns.map((column) =>
+    setColumns(
+      columns.map((column) =>
         column.id === columnId
           ? {
               ...column,
@@ -214,8 +214,8 @@ const useColabBoard = () => {
 
   // Method for deleting a card from the board
   const deleteCardFromBoard = (columnId: string, cardId: string) => {
-    setColumns((allColumns) =>
-      allColumns.map((column) =>
+    setColumns(
+      columns.map((column) =>
         column.id === columnId
           ? {
               ...column,
@@ -233,8 +233,8 @@ const useColabBoard = () => {
     titleColor: string,
     contentColor: string
   ) => {
-    setColumns((allColumns) =>
-      allColumns.map((column) =>
+    setColumns(
+      columns.map((column) =>
         column.id === columnId
           ? {
               ...column,
@@ -343,7 +343,7 @@ const useColabBoard = () => {
   };
   const variable = {
     columns,
-    saveColumns,
+    saveTheColumns,
     addColumnToBoard,
     updateTitleOfColumn,
     deleteColumnFromBoard,

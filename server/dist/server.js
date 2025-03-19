@@ -15,7 +15,7 @@ const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = parseInt(process.env.PORT) || 8001;
-const mongoDB = "mongodb://127.0.0.1:27017/colabboard";
+const mongoDB = "mongodb://127.0.0.1:27017/FullStackDB";
 mongoose_1.default.connect(mongoDB);
 mongoose_1.default.Promise = Promise;
 const db = mongoose_1.default.connection;

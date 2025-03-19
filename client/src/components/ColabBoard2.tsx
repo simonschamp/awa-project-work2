@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useColabBoard from "./useColabBoard";
 import EditfulText from "./EditfulText";
 import "../styles/ColabBoard2.css";
@@ -17,6 +17,15 @@ const formattingTheDate = (timeString?: string): string => {
 };
 
 const ColabBoard2 = () => {
+  // JSON web Token for authentication
+  const [jwt, setJwt] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setJwt(localStorage.getItem("token"));
+    }
+  }, []);
+
   // initialize useColabBoard component
   const { variable } = useColabBoard();
 
@@ -35,185 +44,209 @@ const ColabBoard2 = () => {
 
   return (
     <div>
-      <h2>ColabBoard2</h2>
-      <button onClick={variable.saveColumns}>Save Board</button>
-      {/*Search field */}
-      <label>
-        Perform search:
-        <input
-          className="search-cards"
-          type="text"
-          placeholder="Search the cards..."
-          value={searchWord}
-          onChange={(e) => setSearchWord(e.target.value)}
-        />
-      </label>
-      <input
-        type="text"
-        value={newColumnTitle}
-        onChange={(e) => setNewColumnTitle(e.target.value)}
-        placeholder="Add new title..."
-      />
-      <button
-        onClick={() => {
-          variable.addColumnToBoard(newColumnTitle);
-          setNewColumnTitle("");
-        }}
-      >
-        Add new column
-      </button>
-      <div className="column-div">
-        {variable.columns.map((column) => (
-          <div className="inner-column-div" key={column.id}>
-            {/*<h3>{column.title}</h3>*/}
-            <EditfulText
-              text={column.title}
-              onSave={(newText) =>
-                variable.updateTitleOfColumn(column.id, newText)
-              }
+      <h2>Welcome to ColabBoard2</h2>
+      {!jwt ? (
+        <p>Please log in to the system</p>
+      ) : (
+        <>
+          <button className="save-board" onClick={variable.saveTheColumns}>
+            Save Board
+          </button>
+          {/*Search field */}
+          <label>
+            Perform search:
+            <input
+              className="search-cards"
+              type="text"
+              placeholder="Search the cards..."
+              value={searchWord}
+              onChange={(e) => setSearchWord(e.target.value)}
             />
-            <button
-              className="delete-column-btn"
-              onClick={() => variable.deleteColumnFromBoard(column.id)}
-            >
-              Delete Column
-            </button>
-            <button
-              className="add-new-card-btn"
-              onClick={() =>
-                variable.addCardToColumn(column.id, "Title...", "Content...", 2)
-              }
-            >
-              Add new card
-            </button>
-            {column.cards
-              .filter((card) => filterMatchingCards(card.title, card.content))
-              .map((card) => (
-                <>
-                  <EditableCard
-                    key={card.id}
-                    columnId={column.id}
-                    card={card}
-                    updateColumnCard={variable.updateColumnCard}
-                    deleteCardFromBoard={variable.deleteCardFromBoard}
-                    setColorOfCard={variable.setColorOfCard}
-                  />
-                  <p className="timestamp-paragraph">
-                    Card created at: {formattingTheDate(card.createdAt)}
-                  </p>
-                  {card.createdAt !== card.updatedAt && (
-                    <p className="timestamp-paragraph">
-                      Card updated at: {formattingTheDate(card.updatedAt)}
-                    </p>
-                  )}
-                  <p className="time-estimate-paragraph">
-                    Estimation of time: {card.estimateOfTime} hrs
-                  </p>
-                  <p className="logged-time">Time logged: {card.logTime} hrs</p>
-                  {card.completedAt ? (
-                    <p className="time-estimate-paragraph">
-                      {" "}
-                      {/*Completed at: {formattingTheDate(card.completedAt)}{" "}*/}
-                      {new Date(card.completedAt).toLocaleString()}
-                    </p>
-                  ) : (
-                    <label>
-                      Click if Done
-                      <button
-                        className="done"
-                        onClick={() =>
-                          variable.markTheCardWhenDone(column.id, card.id)
-                        }
-                      >
-                        Done:
-                      </button>
-                    </label>
-                  )}
-                  {/*Log the time form */}
-                  <input
-                    type="number"
-                    placeholder="Hours used"
-                    min={0}
-                    step={0.1}
-                    onChange={(e) =>
-                      variable.logTheTime(
-                        column.id,
-                        card.id,
-                        parseFloat(e.target.value)
-                      )
-                    }
-                  />
-                  <button
-                    onClick={() => variable.logTheTime(column.id, card.id, 1)}
-                  >
-                    +1 hr
-                  </button>
-                  {/*Progress control*/}
-                  <div className="relative overflow-visible">
-                    <ProgressControl
-                      estimateOfTime={card.estimateOfTime || 0}
-                      logTime={card.logTime || 0}
-                      doneTime={card.doneTime || 0}
-                      isFinished={!!card.completedAt}
-                    />
-                  </div>
-                  {/*Add comment input field */}
-                  <input
-                    className="card-comment-input"
-                    type="text"
-                    placeholder="Add comment to the card..."
-                    onKeyDown={(e) => {
-                      if (
-                        e.key === "Enter" &&
-                        e.currentTarget.value.trim() !== ""
-                      ) {
-                        variable.addCommentToTheCard(
-                          column.id,
-                          card.id,
-                          e.currentTarget.value
-                        );
-                        e.currentTarget.value = "";
-                      }
-                    }}
-                  />
-                  {/* Display existing comments*/}
-                  {card.comments.map((comment) => (
+          </label>
+          <input
+            type="text"
+            value={newColumnTitle}
+            onChange={(e) => setNewColumnTitle(e.target.value)}
+            placeholder="Add new column title..."
+          />
+          <button
+            className="add-column-btn"
+            onClick={() => {
+              variable.addColumnToBoard(newColumnTitle);
+              setNewColumnTitle("");
+            }}
+          >
+            Add new column
+          </button>
+          <button className="save-board" onClick={variable.saveTheColumns}>
+            Save Board
+          </button>
+          <div className="column-div">
+            {variable.columns.map((column) => (
+              <div className="inner-column-div" key={column.id}>
+                {/*<h3>{column.title}</h3>*/}
+                <EditfulText
+                  text={column.title}
+                  onSave={(newText) =>
+                    variable.updateTitleOfColumn(column.id, newText)
+                  }
+                />
+                <button
+                  className="delete-column-btn"
+                  onClick={() => variable.deleteColumnFromBoard(column.id)}
+                >
+                  Delete Column
+                </button>
+                <button
+                  className="add-new-card-btn"
+                  onClick={() =>
+                    variable.addCardToColumn(
+                      column.id,
+                      "Title...",
+                      "Content...",
+                      2
+                    )
+                  }
+                >
+                  Add new card
+                </button>
+                {column.cards
+                  .filter((card) =>
+                    filterMatchingCards(card.title, card.content)
+                  )
+                  .map((card) => (
                     <>
-                      <EditfulComment
-                        key={comment.id}
-                        text={comment.text}
-                        onSave={(newText) =>
-                          variable.updateTheComment(
+                      <EditableCard
+                        key={card.id}
+                        columnId={column.id}
+                        card={card}
+                        updateColumnCard={variable.updateColumnCard}
+                        deleteCardFromBoard={variable.deleteCardFromBoard}
+                        setColorOfCard={variable.setColorOfCard}
+                      />
+                      <p className="timestamp-paragraph">
+                        Card created at: {formattingTheDate(card.createdAt)}
+                      </p>
+                      {card.createdAt !== card.updatedAt && (
+                        <p className="timestamp-paragraph">
+                          Card updated at: {formattingTheDate(card.updatedAt)}
+                        </p>
+                      )}
+                      <p className="time-estimate-paragraph">
+                        Estimation of time: {card.estimateOfTime} hrs
+                      </p>
+                      <p className="logged-time">
+                        Time logged: {card.logTime} hrs
+                      </p>
+                      {card.completedAt ? (
+                        <p className="time-estimate-paragraph">
+                          {" "}
+                          {/*Completed at: {formattingTheDate(card.completedAt)}{" "}*/}
+                          {new Date(card.completedAt).toLocaleString()}
+                        </p>
+                      ) : (
+                        <label>
+                          Click if Done
+                          <button
+                            className="done"
+                            onClick={() =>
+                              variable.markTheCardWhenDone(column.id, card.id)
+                            }
+                          >
+                            Done
+                          </button>
+                        </label>
+                      )}
+                      {/*Log the time form */}
+                      <input
+                        type="number"
+                        placeholder="Hours used"
+                        min={0}
+                        step={0.1}
+                        onChange={(e) =>
+                          variable.logTheTime(
                             column.id,
                             card.id,
-                            comment.id,
-                            newText
-                          )
-                        }
-                        onDelete={() =>
-                          variable.deleteTheComment(
-                            column.id,
-                            card.id,
-                            comment.id
+                            parseFloat(e.target.value)
                           )
                         }
                       />
-                      <p className="timestamp-paragraph">
-                        Comment added at: {formattingTheDate(comment.createdAt)}
-                      </p>
-                      {comment.createdAt !== comment.updatedAt && (
-                        <p className="timestamp-paragraph">
-                          Comment updated at:{" "}
-                          {formattingTheDate(comment.updatedAt)}
-                        </p>
-                      )}
+                      <button
+                        onClick={() =>
+                          variable.logTheTime(column.id, card.id, 1)
+                        }
+                      >
+                        +1 hr
+                      </button>
+                      {/*Progress control*/}
+                      <div className="relative overflow-visible">
+                        <ProgressControl
+                          estimateOfTime={card.estimateOfTime || 0}
+                          logTime={card.logTime || 0}
+                          doneTime={card.doneTime || 0}
+                          isFinished={!!card.completedAt}
+                        />
+                      </div>
+                      {/*Add comment input field */}
+                      <input
+                        className="card-comment-input"
+                        type="text"
+                        placeholder="Add comment to the card..."
+                        onKeyDown={(e) => {
+                          if (
+                            e.key === "Enter" &&
+                            e.currentTarget.value.trim() !== ""
+                          ) {
+                            variable.addCommentToTheCard(
+                              column.id,
+                              card.id,
+                              e.currentTarget.value
+                            );
+                            e.currentTarget.value = "";
+                          }
+                        }}
+                      />
+                      {/* Display existing comments*/}
+                      {card.comments.map((comment) => (
+                        <>
+                          <EditfulComment
+                            key={comment.id}
+                            text={comment.text}
+                            onSave={(newText) =>
+                              variable.updateTheComment(
+                                column.id,
+                                card.id,
+                                comment.id,
+                                newText
+                              )
+                            }
+                            onDelete={() =>
+                              variable.deleteTheComment(
+                                column.id,
+                                card.id,
+                                comment.id
+                              )
+                            }
+                          />
+                          <p className="timestamp-paragraph">
+                            Comment added at:{" "}
+                            {formattingTheDate(comment.createdAt)}
+                          </p>
+                          {comment.createdAt !== comment.updatedAt && (
+                            <p className="timestamp-paragraph">
+                              Comment updated at:{" "}
+                              {formattingTheDate(comment.updatedAt)}
+                            </p>
+                          )}
+                        </>
+                      ))}
                     </>
                   ))}
-                </>
-              ))}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      )}
     </div>
   );
 };

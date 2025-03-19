@@ -1,0 +1,10 @@
+/*Targeting the progressBar*/
+.process-control {
+  width: 100%;
+  background-color: #d1d5db;
+  border-radius: 10px;
+  height: 20px;
+  overflow: hidden;
+  position: relative;
+  margin-top: 6px;
+}
