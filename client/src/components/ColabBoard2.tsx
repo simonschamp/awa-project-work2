@@ -49,7 +49,10 @@ const ColabBoard2 = () => {
         <p>Please log in to the system</p>
       ) : (
         <>
-          <button className="save-board" onClick={variable.saveTheColumns}>
+          <button
+            className="save-board animated-button"
+            onClick={variable.saveTheColumns}
+          >
             Save Board
           </button>
           {/*Search field */}
@@ -78,7 +81,10 @@ const ColabBoard2 = () => {
           >
             Add new column
           </button>
-          <button className="save-board" onClick={variable.saveTheColumns}>
+          <button
+            className="save-board animated-button"
+            onClick={variable.saveTheColumns}
+          >
             Save Board
           </button>
           <div className="column-div">

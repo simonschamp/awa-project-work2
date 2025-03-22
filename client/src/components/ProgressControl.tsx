@@ -16,6 +16,10 @@ const ProgressControl: React.FC<ProgressControlProps> = ({
   doneTime,
   isFinished,
 }) => {
+  // Handling zero or negative estimateOfTime
+  if (!estimateOfTime || estimateOfTime <= 0) {
+    return <div className="progress-error">Invalid estimate time</div>;
+  }
   // Calculating log time and Done time progresses
   const safeNumber = (value: number) => (isNaN(value) ? 0 : value);
   const progressOnLog = Math.min(
@@ -25,11 +29,6 @@ const ProgressControl: React.FC<ProgressControlProps> = ({
   const progressOnDone = doneTime
     ? Math.min((safeNumber(doneTime) / safeNumber(estimateOfTime)) * 100, 100)
     : 0;
-
-  if (!estimateOfTime || estimateOfTime <= 0) {
-    console.error("Invalid estimateOfTime:", estimateOfTime);
-    return null;
-  }
 
   return (
     <div className="process-control">

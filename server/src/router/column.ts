@@ -36,7 +36,7 @@ router.post("/columns", async (req: Request, res: Response) => {
     }
   } catch (error: any) {
     console.error("Error saving columns:", error);
-    // Method to precent multiple response attempts
+    // Method to prevent multiple response attempts
     if (!res.headersSent) {
       try {
         res.status(500).json({ error: error.message });
