@@ -26,5 +26,7 @@ Database:
 
 Features/Functionalities 
 -	Authentication, registration, login, logout, API fetching and rendering, searching, Create, Read, Update, and Delete (CRUD) operations, hour logging, Status bar, and data persistence. 
+
+
 Command line 
 -	npm run dev
