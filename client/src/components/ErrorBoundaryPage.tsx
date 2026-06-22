@@ -1,3 +1,4 @@
+// For handling errors
 const ErrorBoundaryPage = (error: unknown) => {
   console.log("Error occured", error);
   return (
