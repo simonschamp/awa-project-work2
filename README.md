@@ -9,6 +9,8 @@ Frontend:
 -	TypeScript 
 -	JavaScript 
 -	Material ui
+
+
 Backend:
 -	NodeJS, 
 -	Express
