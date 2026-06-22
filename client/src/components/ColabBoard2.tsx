@@ -44,12 +44,13 @@ const ColabBoard2 = () => {
 
   return (
     <div>
-      <h2>Welcome to ColabBoard2</h2>
+      <h2 data-testid="board-title">Welcome to ColabBoard2</h2>
       {!jwt ? (
-        <p>Please log in to the system</p>
+        <p data-testid="login-message">Please log in to the system</p>
       ) : (
         <>
           <button
+            data-testid="save-board"
             className="save-board animated-button"
             onClick={variable.saveTheColumns}
           >
@@ -59,6 +60,7 @@ const ColabBoard2 = () => {
           <label>
             Perform search:
             <input
+              data-testid="search-input"
               className="search-cards"
               type="text"
               placeholder="Search the cards..."
@@ -67,12 +69,14 @@ const ColabBoard2 = () => {
             />
           </label>
           <input
+            data-testid="new-column-input"
             type="text"
             value={newColumnTitle}
             onChange={(e) => setNewColumnTitle(e.target.value)}
             placeholder="Add new column title..."
           />
           <button
+            data-testid="add-column-btn"
             className="add-column-btn"
             onClick={() => {
               variable.addColumnToBoard(newColumnTitle);
@@ -89,7 +93,11 @@ const ColabBoard2 = () => {
           </button>
           <div className="column-div">
             {variable.columns.map((column) => (
-              <div className="inner-column-div" key={column.id}>
+              <div
+                className="inner-column-div"
+                key={column.id}
+                data-testid={`column-${column.id}`}
+              >
                 {/*<h3>{column.title}</h3>*/}
                 <EditfulText
                   text={column.title}
@@ -98,19 +106,21 @@ const ColabBoard2 = () => {
                   }
                 />
                 <button
+                  data-testid={`delete-column-${column.id}`}
                   className="delete-column-btn"
                   onClick={() => variable.deleteColumnFromBoard(column.id)}
                 >
                   Delete Column
                 </button>
                 <button
+                  data-testid={`add-card-${column.id}`}
                   className="add-new-card-btn"
                   onClick={() =>
                     variable.addCardToColumn(
                       column.id,
                       "Title...",
                       "Content...",
-                      2
+                      2,
                     )
                   }
                 >
@@ -118,7 +128,7 @@ const ColabBoard2 = () => {
                 </button>
                 {column.cards
                   .filter((card) =>
-                    filterMatchingCards(card.title, card.content)
+                    filterMatchingCards(card.title, card.content),
                   )
                   .map((card) => (
                     <>
@@ -154,6 +164,7 @@ const ColabBoard2 = () => {
                         <label>
                           Click if Done
                           <button
+                            data-testid={`done-${card.id}`}
                             className="done"
                             onClick={() =>
                               variable.markTheCardWhenDone(column.id, card.id)
@@ -173,11 +184,12 @@ const ColabBoard2 = () => {
                           variable.logTheTime(
                             column.id,
                             card.id,
-                            parseFloat(e.target.value)
+                            parseFloat(e.target.value),
                           )
                         }
                       />
                       <button
+                        data-testid={`logtime-${card.id}`}
                         onClick={() =>
                           variable.logTheTime(column.id, card.id, 1)
                         }
@@ -195,6 +207,7 @@ const ColabBoard2 = () => {
                       </div>
                       {/*Add comment input field */}
                       <input
+                        data-testid={`comment-input-${card.id}`}
                         className="card-comment-input"
                         type="text"
                         placeholder="Add comment to the card..."
@@ -206,7 +219,7 @@ const ColabBoard2 = () => {
                             variable.addCommentToTheCard(
                               column.id,
                               card.id,
-                              e.currentTarget.value
+                              e.currentTarget.value,
                             );
                             e.currentTarget.value = "";
                           }
@@ -223,14 +236,14 @@ const ColabBoard2 = () => {
                                 column.id,
                                 card.id,
                                 comment.id,
-                                newText
+                                newText,
                               )
                             }
                             onDelete={() =>
                               variable.deleteTheComment(
                                 column.id,
                                 card.id,
-                                comment.id
+                                comment.id,
                               )
                             }
                           />
