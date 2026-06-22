@@ -102,3 +102,34 @@ UI - Add Comment
     Wait Until Page Contains    My comment
 
     Close Browser
+
+
+UI - Save Board
+    Open App As Logged In User
+
+    Wait Until Element Is Visible    css=[data-testid="save-board"]
+
+    Click Element    css=[data-testid="save-board"]
+
+    Close Browser
+
+
+UI - Delete Column
+    Open App As Logged In User
+
+    # Create a column first (required)
+    Input Text    css=[data-testid="new-column-input"]    Test Column
+    Click Button  css=[data-testid="add-column-btn"]
+
+    Wait Until Element Is Visible    css=[data-testid^="delete-column-"]
+
+    # Click delete using stable selector
+    Click Element    css=[data-testid^="delete-column-"]
+
+    Close Browser
+
+
+UI - Search Input Visible
+    Open App As Logged In User
+    Page Should Contain Element    css=[data-testid="search-input"]
+    Close Browser
