@@ -16,6 +16,8 @@ Backend:
 -	Express
 -	Path, File System
 -	Nodemon 
+
+
 Database:
 -	Static db
 Features/functionalities 
