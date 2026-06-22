@@ -1,3 +1,4 @@
+This is a full working system. Details of the tech stack and functionalities are given below.
 GitHub: https://github.com/simonschamp/FS-TypeScript 
 Frontend:
 -	React 
