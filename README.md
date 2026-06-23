@@ -1,4 +1,4 @@
-This is a full working system. Details of the tech stack and functionalities are given below.
+This is a full working system. Details of the tech stack and functionalities are given below. Contributors are welcome!
 
 
 GitHub: https://github.com/simonschamp/awa-project-work2
